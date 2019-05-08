@@ -1,0 +1,472 @@
+buildCmd: mvn -e -X -Dmaven.test.skip=true compile
+testCmd: true
+lineLength: 4096
+skipVerification: true
+cbmcArguments:
+  # Do not generate coverage comments on generated tests.
+  java-generate-no-comments: true
+phases:
+  -
+  #Phase 0 PRETTY AND SIMPLE - Simple models, quick cover, pretty Tests, Do Not Test Private Method Directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [ private ]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # Instrument the file as opposed to the function only
+      cover-only: file
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+  -
+  #Phase 1 PRETTY AND COMPLEX - Standard models, longer run time, pretty tests, Do Not Test Private Method Directly
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 2
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [ private ]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+  -
+  #Phase 2 Simple and Private Directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+      # If the logs contain output of the following then proceed to phase X
+    nextPhase:
+      # If the function is not analysable then do not pass onto the next phase
+      not_analyzed: null
+  -
+  #Phase 3 Complex and Private Directly
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 3000
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 30
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 3
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+  -
+  #Phase 4 EXCEPTIONS
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 30
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: true
+      # Set an upper bound on loop unwinding.
+  -
+    #PHASE 5 Big numbers and less contraints on inputs 
+    timeout: 300
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 100
+      # Bound the length of input strings.
+      max-nondet-string-length: 100
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 6
+units:
+#Target TGF: 398.383119658
+# - methods: 90
+# - complexity: 1019
+# - construction: 27.8121794872
+# - dependency: 30.6666666667
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$ChannelInfo.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 427.403525641
+# - methods: 96
+# - complexity: 1401
+# - construction: 30.7352564103
+# - dependency: 45.3333333333
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$RouteRequest$Builder.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 585.145060691
+# - methods: 82
+# - complexity: 3962
+# - construction: 37.1
+# - dependency: 25.8778711485
+  - target:
+    - dir: broker/target/classes
+      file: io/moquette/persistence/DatabaseStore.class
+      sourceDir: broker/src/main/java
+      sourceFile: io/moquette/persistence/DatabaseStore.java
+#Target TGF: 384.449358974
+# - methods: 86
+# - complexity: 1138
+# - construction: 28.1935897436
+# - dependency: 42.3333333333
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$GroupInfo$Builder.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 471.270192308
+# - methods: 100
+# - complexity: 1483
+# - construction: 34.4019230769
+# - dependency: 50.3333333333
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$ChannelInfo$Builder.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 368.772008547
+# - methods: 87
+# - complexity: 969
+# - construction: 25.8121794872
+# - dependency: 28.6666666667
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$RouteRequest.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 555.728525641
+# - methods: 112
+# - complexity: 1765
+# - construction: 40.3185897436
+# - dependency: 58.3333333333
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$User$Builder.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 381.752136752
+# - methods: 98
+# - complexity: 1313
+# - construction: 33.9852564103
+# - dependency: 48.3333333333
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$MessageContent$Builder.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+#Target TGF: 629.824906892
+# - methods: 91
+# - complexity: 6681
+# - construction: 48.1428571429
+# - dependency: 23.2841630592
+  - target:
+    - dir: broker/target/classes
+      file: io/moquette/persistence/MemoryMessagesStore.class
+      sourceDir: broker/src/main/java
+      sourceFile: io/moquette/persistence/MemoryMessagesStore.java
+#Target TGF: 470.327564103
+# - methods: 100
+# - complexity: 1203
+# - construction: 32.1455128205
+# - dependency: 34.6666666667
+  - target:
+    - dir: client/target/classes
+      file: cn/wildfirechat/proto/WFCMessage$User.class
+      sourceDir: client/src/main/java
+      sourceFile: cn/wildfirechat/proto/WFCMessage.java
+dependenciesOnClasspath:
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupMember$Builder.class
+-
+  source: classes
+  classFile: io/moquette/spi/IStore.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$User.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupMember.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfo.class
+-
+  source: classes
+  classFile: win/liyufan/im/MessageShardingUtil.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest$1.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage.class
+-
+  source: classes
+  classFile: io/moquette/persistence/DatabaseStore$1.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$User$1.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserResult.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ModifyUserSettingReq.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Message$Builder.class
+-
+  source: classes
+  classFile: io/moquette/server/Server.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfo$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChatroomInfo.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserSettingEntry$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$User$Builder.class
+-
+  source: classes
+  classFile: win/liyufan/im/UUIDGenerator.class
+-
+  source: classes
+  classFile: win/liyufan/im/SensitiveFilter.class
+-
+  source: classes
+  classFile: com/xiaoleilu/loServer/model/FriendData.class
+-
+  source: classes
+  classFile: io/moquette/spi/ISessionsStore.class
+-
+  source: classes
+  classFile: win/liyufan/im/Utility.class
+-
+  source: classes
+  classFile: io/moquette/spi/IMessagesStore$StoredMessage.class
+-
+  source: classes
+  classFile: io/moquette/persistence/MemoryMessagesStore$2.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Conversation.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChatroomMemberInfo$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$FriendRequest$Builder.class
+-
+  source: classes
+  classFile: io/moquette/persistence/MemorySessionStore$Session.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$MessageContent$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Conversation$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/server/ThreadPoolExecutorWrapper.class
+-
+  source: classes
+  classFile: io/moquette/persistence/MemoryMessagesStore$1.class
+-
+  source: classes
+  classFile: win/liyufan/im/IDUtils.class
+-
+  source: classes
+  classFile: io/moquette/persistence/DatabaseStore.class
+-
+  source: classes
+  classFile: io/moquette/spi/IMatchingCondition.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$PullMessageResult$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$InfoEntry.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Robot$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserSettingEntry.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$MessageContent.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfoOrBuilder.class
+-
+  source: classes
+  classFile: win/liyufan/im/MessageBundle.class
+-
+  source: classes
+  classFile: io/moquette/persistence/UserClientEntry.class
+-
+  source: classes
+  classFile: com/xiaoleilu/loServer/pojos/InputOutputUserBlockStatus.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequestOrBuilder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$1.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$PullMessageResult.class
+-
+  source: classes
+  classFile: io/moquette/spi/security/Tokenor.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChatroomMemberInfo.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GetUserSettingResult$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserRequest.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfoOrBuilder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$HandleFriendRequest.class
+-
+  source: classes
+  classFile: io/moquette/persistence/MemoryMessagesStore.class
+-
+  source: classes
+  classFile: win/liyufan/im/DBUtil.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Robot.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ModifyMyInfoRequest.class
+-
+  source: classes
+  classFile: io/moquette/spi/IMessagesStore.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserResult$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserOrBuilder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$MessageContentOrBuilder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$PullUserResult$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$FriendRequest.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChatroomInfo$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$Message.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$AddFriendRequest.class
