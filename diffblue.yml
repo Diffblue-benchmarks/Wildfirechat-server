@@ -156,13 +156,110 @@ phases:
       # Set an upper bound on loop unwinding.
       unwind: 6
 units:
-  # Target Coverage: Unknown %
-  - target:
-    - dir: client/target/classes
-      file: io/moquette/spi/impl/security/AES.class
-      sourceDir: client/src/main/java
-      sourceFile: io/moquette/spi/impl/security/AES.java
+# Target TGF: 446.166666667
+#  >methods=90
+#  >complexity=1015
+#  >construction=38.6214285714
+#  >dependency=27.1666666667
+ - target:
+   - dir: client/target/classes
+     file: cn/wildfirechat/proto/WFCMessage$ChannelInfo.class
+     sourceDir: client/src/main/java
+     sourceFile: cn/wildfirechat/proto/WFCMessage.java
+# Target TGF: 584.25
+#  >methods=24
+#  >complexity=303
+#  >construction=76.5
+#  >dependency=4.625
+ - target:
+   - dir: broker/target/classes
+     file: com/xiaoleilu/loServer/ServerSetting.class
+     sourceDir: broker/src/main/java
+     sourceFile: com/xiaoleilu/loServer/ServerSetting.java
+# Target TGF: 558.631985294
+#  >methods=82
+#  >complexity=3952
+#  >construction=35.4285714286
+#  >dependency=25.3778711485
+ - target:
+   - dir: broker/target/classes
+     file: io/moquette/persistence/DatabaseStore.class
+     sourceDir: broker/src/main/java
+     sourceFile: io/moquette/persistence/DatabaseStore.java
+# Target TGF: 760.285714286
+#  >methods=10
+#  >complexity=418
+#  >construction=54.0
+#  >dependency=2.22619047619
+ - target:
+   - dir: client/target/classes
+     file: io/moquette/spi/impl/security/AES.class
+     sourceDir: client/src/main/java
+     sourceFile: io/moquette/spi/impl/security/AES.java
+# Target TGF: 555.75
+#  >methods=6
+#  >complexity=201
+#  >construction=27.0
+#  >dependency=1.0
+ - target:
+   - dir: broker/target/classes
+     file: win/liyufan/im/MessageShardingUtil.class
+     sourceDir: broker/src/main/java
+     sourceFile: win/liyufan/im/MessageShardingUtil.java
+# Target TGF: 494.088095238
+#  >methods=112
+#  >complexity=1761
+#  >construction=36.0642857143
+#  >dependency=55.8333333333
+ - target:
+   - dir: client/target/classes
+     file: cn/wildfirechat/proto/WFCMessage$User$Builder.class
+     sourceDir: client/src/main/java
+     sourceFile: cn/wildfirechat/proto/WFCMessage.java
+# Target TGF: 1278.0
+#  >methods=6
+#  >complexity=339
+#  >construction=27.0
+#  >dependency=1.16666666667
+ - target:
+   - dir: broker/target/classes
+     file: win/liyufan/im/IDUtils.class
+     sourceDir: broker/src/main/java
+     sourceFile: win/liyufan/im/IDUtils.java
+# Target TGF: 699.016160328
+#  >methods=91
+#  >complexity=6647
+#  >construction=51.8857142857
+#  >dependency=23.1174963925
+ - target:
+   - dir: broker/target/classes
+     file: io/moquette/persistence/MemoryMessagesStore.class
+     sourceDir: broker/src/main/java
+     sourceFile: io/moquette/persistence/MemoryMessagesStore.java
+# Target TGF: 520.416666667
+#  >methods=100
+#  >complexity=1199
+#  >construction=43.1214285714
+#  >dependency=31.1666666667
+ - target:
+   - dir: client/target/classes
+     file: cn/wildfirechat/proto/WFCMessage$User.class
+     sourceDir: client/src/main/java
+     sourceFile: cn/wildfirechat/proto/WFCMessage.java
+# Target TGF: 839.303571429
+#  >methods=13
+#  >complexity=568
+#  >construction=81.0
+#  >dependency=2.32738095238
+ - target:
+   - dir: broker/target/classes
+     file: io/moquette/spi/security/DES.class
+     sourceDir: broker/src/main/java
+     sourceFile: io/moquette/spi/security/DES.java
 dependenciesOnClasspath:
+-
+  source: classes
+  classFile: win/liyufan/im/IDUtils.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$GroupMember$Builder.class
@@ -177,19 +274,19 @@ dependenciesOnClasspath:
   classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest$Builder.class
+  classFile: com/xiaoleilu/loServer/exception/ServerSettingException.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$GroupMember.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$Builder.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$GroupInfo.class
 -
   source: classes
   classFile: win/liyufan/im/MessageShardingUtil.class
--
-  source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest$1.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage.class
@@ -207,13 +304,13 @@ dependenciesOnClasspath:
   classFile: cn/wildfirechat/proto/WFCMessage$ModifyUserSettingReq.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$Message$Builder.class
+  classFile: io/moquette/persistence/DatabaseStore.class
 -
   source: classes
-  classFile: io/moquette/server/Server.class
+  classFile: com/xiaoleilu/loServer/action/DefaultIndexAction.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfo$Builder.class
+  classFile: com/xiaoleilu/loServer/annotation/HttpMethod.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$RouteRequest.class
@@ -231,9 +328,6 @@ dependenciesOnClasspath:
   classFile: win/liyufan/im/UUIDGenerator.class
 -
   source: classes
-  classFile: win/liyufan/im/SensitiveFilter.class
--
-  source: classes
   classFile: com/xiaoleilu/loServer/model/FriendData.class
 -
   source: classes
@@ -241,6 +335,9 @@ dependenciesOnClasspath:
 -
   source: classes
   classFile: win/liyufan/im/Utility.class
+-
+  source: classes
+  classFile: io/moquette/server/Server.class
 -
   source: classes
   classFile: io/moquette/spi/IMessagesStore$StoredMessage.class
@@ -273,10 +370,10 @@ dependenciesOnClasspath:
   classFile: io/moquette/persistence/MemoryMessagesStore$1.class
 -
   source: classes
-  classFile: win/liyufan/im/IDUtils.class
+  classFile: win/liyufan/im/SpinLock.class
 -
   source: classes
-  classFile: io/moquette/persistence/DatabaseStore.class
+  classFile: cn/wildfirechat/proto/WFCMessage$Message$Builder.class
 -
   source: classes
   classFile: io/moquette/spi/IMatchingCondition.class
@@ -306,19 +403,16 @@ dependenciesOnClasspath:
   classFile: io/moquette/persistence/UserClientEntry.class
 -
   source: classes
-  classFile: com/xiaoleilu/loServer/pojos/InputOutputUserBlockStatus.class
--
-  source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$RouteRequestOrBuilder.class
--
-  source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$1.class
+  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfo$Builder.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$PullMessageResult.class
 -
   source: classes
   classFile: io/moquette/spi/security/Tokenor.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$HandleFriendRequest.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$ChatroomMemberInfo.class
@@ -330,13 +424,10 @@ dependenciesOnClasspath:
   classFile: cn/wildfirechat/proto/WFCMessage$UserRequest.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$GroupInfoOrBuilder.class
+  classFile: win/liyufan/im/SensitiveFilter.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$HandleFriendRequest.class
--
-  source: classes
-  classFile: io/moquette/persistence/MemoryMessagesStore.class
+  classFile: com/xiaoleilu/loServer/annotation/Route.class
 -
   source: classes
   classFile: win/liyufan/im/DBUtil.class
@@ -345,7 +436,7 @@ dependenciesOnClasspath:
   classFile: cn/wildfirechat/proto/WFCMessage$Robot.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$Builder.class
+  classFile: com/xiaoleilu/loServer/action/UnknownErrorAction.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$ModifyMyInfoRequest.class
@@ -354,13 +445,13 @@ dependenciesOnClasspath:
   classFile: io/moquette/spi/IMessagesStore.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$UserResult$Builder.class
+  classFile: cn/wildfirechat/proto/WFCMessage$ChannelInfo$1.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$UserOrBuilder.class
 -
   source: classes
-  classFile: cn/wildfirechat/proto/WFCMessage$MessageContentOrBuilder.class
+  classFile: com/xiaoleilu/loServer/pojos/InputOutputUserBlockStatus.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$PullUserResult$Builder.class
@@ -370,6 +461,9 @@ dependenciesOnClasspath:
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$ChatroomInfo$Builder.class
+-
+  source: classes
+  classFile: cn/wildfirechat/proto/WFCMessage$UserResult$Builder.class
 -
   source: classes
   classFile: cn/wildfirechat/proto/WFCMessage$Message.class
